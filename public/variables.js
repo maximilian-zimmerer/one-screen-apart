@@ -9,9 +9,9 @@ let myID,
 
 let topLeft,
   topRight,
-  bottomLeft,
   topMiddle,
   middleLeft,
+  bottomLeft,
   bottomRight,
   middleRight,
   bottomMiddle;
@@ -48,11 +48,11 @@ class Particle {
   magnetise(target, bool, f) {
     let force = p5.Vector.sub(target, this.pos);
     let d = force.magSq();
-    d = constrain(d, 10, 100);
+    d = constrain(d, 10, 150);
     let strength = this.g / d;
     force.setMag(strength);
     bool ? force.mult(f) : force.mult(-f);
-    if (d < 10) force.mult(-10);
+    if (d < 20) force.mult(-10);
     this.acc.add(force);
   }
 }

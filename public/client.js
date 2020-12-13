@@ -82,18 +82,18 @@ function overlap() {
   return distance < 50 && mouseIsPressed && touchServer;
 }
 function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight);
+  resizeCanvas(windowWidth, windowHeight);
   setBorder();
 }
 function setBorder() {
   topLeft = createVector(0, 0);
-  topRight = createVector(window.innerWidth, 0);
-  bottomLeft = createVector(0, window.innerHeight);
-  topMiddle = createVector(window.innerWidth / 2, 0);
-  middleLeft = createVector(0, window.innerHeight / 2);
-  bottomRight = createVector(window.innerWidth, window.innerHeight);
-  middleRight = createVector(window.innerWidth, window.innerHeight / 2);
-  bottomMiddle = createVector(window.innerWidth / 2, window.innerHeight);
+  topRight = createVector(windowWidth, 0);
+  bottomLeft = createVector(0, windowHeight);
+  topMiddle = createVector(windowWidth / 2, 0);
+  middleLeft = createVector(0, windowHeight / 2);
+  bottomRight = createVector(windowWidth, windowHeight);
+  middleRight = createVector(windowWidth, windowHeight / 2);
+  bottomMiddle = createVector(windowWidth / 2, windowHeight);
   repellers = [
     topLeft,
     topRight,
