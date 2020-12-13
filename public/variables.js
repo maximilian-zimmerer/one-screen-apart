@@ -1,4 +1,5 @@
-let myID,
+let col,
+  myID,
   canvas,
   myIndex,
   clients,
@@ -24,9 +25,9 @@ let factorServer = 3;
 let clientAttractor, serverAttractor;
 
 class Particle {
-  constructor(x, y) {
+  constructor(x, y, color) {
     // this.color = color("#e1e1e1");
-    this.color = 225;
+    this.color = color;
     this.pos = createVector(x, y);
     this.prev = createVector(x, y);
     this.vel = p5.Vector.random2D();

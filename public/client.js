@@ -1,14 +1,28 @@
 const socket = io();
 touchServer = false;
 const status = $(".status");
+const statusWrapper = $(".status-wrapper");
+const notification = $(".notification-wrapper");
 const container = document.getElementById("canvas-wrapper");
 
+$(document).ready(() => {
+  if (!onMobile()) {
+    col = 60;
+    notification.fadeIn();
+    notification.css("display", "flex");
+  } else {
+    col = 225;
+    statusWrapper.fadeIn();
+  }
+});
 $(window).on("resize", () => {
   setBorder();
 });
 socket.on("connect", () => {
   myID = socket.id;
   console.log("1. my id: " + socket.id);
+  // disconnect if not on mobile
+  if (!onMobile()) socket.disconnect();
 });
 socket.on("clients", (clients) => {
   userCount = clients.length;
@@ -24,7 +38,6 @@ socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
   touchServer = true;
 });
-
 function setup() {
   canvas = createCanvas(container.offsetWidth, container.offsetHeight);
   canvas.parent("canvas-wrapper");
@@ -35,7 +48,7 @@ function setup() {
   setBorder();
   // particles
   for (var i = 0; i < 500; i++) {
-    particles.push(new Particle(width / 2, height / 2));
+    particles.push(new Particle(width / 2, height / 2, col));
   }
 }
 function draw() {
@@ -54,7 +67,7 @@ function draw() {
     }
     overlap()
       ? (particles[i].color = random(30, 225))
-      : (particles[i].color = 225);
+      : (particles[i].color = col);
     particles[i].update();
     particles[i].show();
   }
@@ -108,4 +121,9 @@ function setBorder() {
     bottomMiddle,
   ];
   resizeCanvas(container.offsetWidth, container.offsetHeight);
+}
+function onMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 }
