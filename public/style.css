@@ -24,13 +24,14 @@ body {
   width: 100%;
   padding: 1em;
   color: white;
-  position: fixed;
-  height: min-content;
+  position: absolute;
   mix-blend-mode: difference;
 }
 #canvas-wrapper {
   z-index: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  position: absolute;
   /* border: 1px solid yellow; */
 }
