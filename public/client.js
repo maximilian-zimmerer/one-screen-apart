@@ -14,11 +14,13 @@ $(document).ready(() => {
     col = 225;
     statusWrapper.fadeIn();
   }
+  // set to viewport units
+  setInterval(() => {
+    $("body, html").css("height", "100vh");
+  }, 1000);
 });
 $(window).on("resize", () => {
   setBorder();
-  // set to viewport units
-  $("body, html").css("height", "100vh");
 });
 socket.on("connect", () => {
   myID = socket.id;
