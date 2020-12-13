@@ -51,11 +51,11 @@ class Particle {
   magnetise(target, bool, f) {
     let force = p5.Vector.sub(target, this.pos);
     let d = force.magSq();
-    d = constrain(d, 10, 150);
+    d = constrain(d, 60, 150);
     let strength = this.g / d;
     force.setMag(strength);
     bool ? force.mult(f) : force.mult(-f);
-    if (d < 20) force.mult(-10);
+    if (d < 60) force.mult(-30);
     this.acc.add(force);
   }
 }

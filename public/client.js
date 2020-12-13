@@ -42,12 +42,12 @@ function setup() {
   canvas = createCanvas(container.offsetWidth, container.offsetHeight);
   canvas.parent("canvas-wrapper");
   // mouse clientAttractor
-  clientAttractor = new Attractor(width / 2, height / 2, 30, 255);
-  serverAttractor = new Attractor(width / 2, height / 2, 30, 100);
+  clientAttractor = new Attractor(width / 2, height / 2, 60, 255);
+  serverAttractor = new Attractor(width / 2, height / 2, 60, 100);
   // border repellers
   setBorder();
   // particles
-  for (var i = 0; i < 500; i++) {
+  for (var i = 0; i < 1000; i++) {
     particles.push(new Particle(width / 2, height / 2, col));
   }
 }
