@@ -21,10 +21,11 @@ body {
 .status-wrapper {
   bottom: 0;
   z-index: 1;
-  width: 100%;
+  width: 100vw;
   padding: 1em;
+  height: auto;
+  position: fixed;
   color: #e1e1e1;
-  position: absolute;
   mix-blend-mode: difference;
 }
 #canvas-wrapper {
