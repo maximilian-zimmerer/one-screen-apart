@@ -1,6 +1,7 @@
 const socket = io();
 touchServer = false;
 const status = $(".status");
+const container = document.getElementById("canvas-wrapper");
 
 socket.on("connect", () => {
   myID = socket.id;
@@ -22,7 +23,8 @@ socket.on("pos", (pos) => {
 });
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(container.offsetWidth, container.offsetHeight);
+  canvas.parent("canvas-wrapper");
   // mouse clientAttractor
   clientAttractor = new Attractor(width / 2, height / 2, 30, 255);
   serverAttractor = new Attractor(width / 2, height / 2, 30, 100);
@@ -81,19 +83,18 @@ function draw() {
 function overlap() {
   return distance < 50 && mouseIsPressed && touchServer;
 }
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  setBorder();
-}
 function setBorder() {
   topLeft = createVector(0, 0);
-  topRight = createVector(windowWidth, 0);
-  bottomLeft = createVector(0, windowHeight);
-  topMiddle = createVector(windowWidth / 2, 0);
-  middleLeft = createVector(0, windowHeight / 2);
-  bottomRight = createVector(windowWidth, windowHeight);
-  middleRight = createVector(windowWidth, windowHeight / 2);
-  bottomMiddle = createVector(windowWidth / 2, windowHeight);
+  topRight = createVector(container.offsetWidth, 0);
+  bottomLeft = createVector(0, container.offsetHeight);
+  topMiddle = createVector(container.offsetWidth / 2, 0);
+  middleLeft = createVector(0, container.offsetHeight / 2);
+  bottomRight = createVector(container.offsetWidth, container.offsetHeight);
+  middleRight = createVector(container.offsetWidth, container.offsetHeight / 2);
+  bottomMiddle = createVector(
+    container.offsetWidth / 2,
+    container.offsetHeight
+  );
   repellers = [
     topLeft,
     topRight,
@@ -104,4 +105,8 @@ function setBorder() {
     middleRight,
     bottomMiddle,
   ];
+}
+function windowResized() {
+  resizeCanvas(container.offsetWidth, container.offsetHeight);
+  setBorder();
 }

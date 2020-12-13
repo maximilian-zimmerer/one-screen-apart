@@ -1,4 +1,5 @@
 let myID,
+  canvas,
   myIndex,
   clients,
   targetID,
