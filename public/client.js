@@ -3,6 +3,9 @@ touchServer = false;
 const status = $(".status");
 const container = document.getElementById("canvas-wrapper");
 
+$(window).on("resize", () => {
+  setBorder();
+});
 socket.on("connect", () => {
   myID = socket.id;
   console.log("1. my id: " + socket.id);
@@ -98,15 +101,12 @@ function setBorder() {
   repellers = [
     topLeft,
     topRight,
-    bottomLeft,
     topMiddle,
     middleLeft,
-    bottomRight,
     middleRight,
+    bottomLeft,
+    bottomRight,
     bottomMiddle,
   ];
-}
-function windowResized() {
   resizeCanvas(container.offsetWidth, container.offsetHeight);
-  setBorder();
 }
