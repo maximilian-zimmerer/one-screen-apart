@@ -60,9 +60,16 @@ function draw() {
     for (var j = 0; j < repellers.length; j++) {
       particles[i].magnetise(repellers[j], true, 1);
     }
-    overlap()
-      ? (particles[i].color = random(30, 225))
-      : (particles[i].color = col);
+    // overlap event
+    if (overlap()) {
+      particles[i].color = random(30, 225);
+      factorServer = 1.5;
+      factorClient = 1.5;
+    } else {
+      particles[i].color = col;
+      factorServer = 3;
+      factorClient = 3;
+    }
     particles[i].update();
     particles[i].show();
   }
