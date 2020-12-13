@@ -4,15 +4,23 @@ let myID,
   targetID,
   distance,
   userCount,
-  mappedColor,
+  repellers,
   touchServer;
 
-let clientAttractor, serverAttractor;
+let topLeft,
+  topRight,
+  bottomLeft,
+  topMiddle,
+  middleLeft,
+  bottomRight,
+  middleRight,
+  bottomMiddle;
+
 let bool = false;
 let particles = [];
-let repellers;
 let factorClient = 3;
 let factorServer = 3;
+let clientAttractor, serverAttractor;
 
 class Particle {
   constructor(x, y) {

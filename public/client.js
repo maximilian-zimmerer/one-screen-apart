@@ -27,24 +27,7 @@ function setup() {
   clientAttractor = new Attractor(width / 2, height / 2, 30, 255);
   serverAttractor = new Attractor(width / 2, height / 2, 30, 100);
   // border repellers
-  let topLeft = createVector(0, 0);
-  let topRight = createVector(windowWidth, 0);
-  let bottomLeft = createVector(0, windowHeight);
-  let topMiddle = createVector(windowWidth / 2, 0);
-  let middleLeft = createVector(0, windowHeight / 2);
-  let bottomRight = createVector(windowWidth, windowHeight);
-  let middleRight = createVector(windowWidth, windowHeight / 2);
-  let bottomMiddle = createVector(windowWidth / 2, windowHeight);
-  repellers = [
-    topLeft,
-    topRight,
-    bottomLeft,
-    topMiddle,
-    middleLeft,
-    bottomRight,
-    middleRight,
-    bottomMiddle,
-  ];
+  setBorder();
   // particles
   for (var i = 0; i < 500; i++) {
     particles.push(new Particle(width / 2, height / 2));
@@ -98,6 +81,27 @@ function draw() {
 function overlap() {
   return distance < 50 && mouseIsPressed && touchServer;
 }
+function setBorder() {
+  topLeft = createVector(0, 0);
+  topRight = createVector(window.innerWidth, 0);
+  bottomLeft = createVector(0, window.innerHeight);
+  topMiddle = createVector(window.innerWidth / 2, 0);
+  middleLeft = createVector(0, window.innerHeight / 2);
+  bottomRight = createVector(window.innerWidth, window.innerHeight);
+  middleRight = createVector(window.innerWidth, window.innerHeight / 2);
+  bottomMiddle = createVector(window.innerWidth / 2, window.innerHeight);
+  repellers = [
+    topLeft,
+    topRight,
+    bottomLeft,
+    topMiddle,
+    middleLeft,
+    bottomRight,
+    middleRight,
+    bottomMiddle,
+  ];
+}
 function windowResized() {
   resizeCanvas(window.innerWidth, window.innerHeight);
+  setBorder();
 }
