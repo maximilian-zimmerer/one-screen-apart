@@ -81,6 +81,10 @@ function draw() {
 function overlap() {
   return distance < 50 && mouseIsPressed && touchServer;
 }
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight);
+  setBorder();
+}
 function setBorder() {
   topLeft = createVector(0, 0);
   topRight = createVector(window.innerWidth, 0);
@@ -100,8 +104,4 @@ function setBorder() {
     middleRight,
     bottomMiddle,
   ];
-}
-function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight);
-  setBorder();
 }
