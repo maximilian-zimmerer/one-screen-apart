@@ -24,6 +24,12 @@ let factorClient = 3;
 let factorServer = 3;
 let clientAttractor, serverAttractor;
 
+const socket = io();
+const status = $(".status");
+const statusWrapper = $(".status-wrapper");
+const notification = $(".notification-wrapper");
+const container = document.getElementById("canvas-wrapper");
+
 class Particle {
   constructor(x, y, color) {
     // this.color = color("#e1e1e1");
@@ -37,6 +43,7 @@ class Particle {
   }
   show() {
     strokeWeight(3);
+    strokeCap(ROUND);
     stroke(this.color, this.color, this.color);
     line(this.pos.x, this.pos.y, this.prev.x, this.prev.y);
     this.prev.x = this.pos.x;
@@ -55,7 +62,7 @@ class Particle {
     let strength = this.g / d;
     force.setMag(strength);
     bool ? force.mult(f) : force.mult(-f);
-    if (d < 60) force.mult(-30);
+    if (d < 60) force.mult(-60);
     this.acc.add(force);
   }
 }

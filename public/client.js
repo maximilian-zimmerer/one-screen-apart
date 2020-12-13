@@ -1,9 +1,5 @@
-const socket = io();
 touchServer = false;
-const status = $(".status");
-const statusWrapper = $(".status-wrapper");
-const notification = $(".notification-wrapper");
-const container = document.getElementById("canvas-wrapper");
+p5.disableFriendlyErrors = true;
 
 $(document).ready(() => {
   if (!hasTouch()) {
@@ -14,10 +10,6 @@ $(document).ready(() => {
     col = 225;
     statusWrapper.fadeIn();
   }
-  // set to viewport units
-  setInterval(() => {
-    $("body, html").css("height", "100vh");
-  }, 1000);
 });
 $(window).on("resize", () => {
   setBorder();
@@ -35,8 +27,7 @@ socket.on("clients", (clients) => {
   targetID
     ? status.html("You're connected.")
     : status.html("Waiting for a friend...");
-  // console.log("2. clients: " + clients);
-  // console.log("3. target: " + targetID);
+  // console.log("2. target: " + targetID);
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
@@ -46,12 +37,12 @@ function setup() {
   canvas = createCanvas(container.offsetWidth, container.offsetHeight);
   canvas.parent("canvas-wrapper");
   // mouse clientAttractor
-  clientAttractor = new Attractor(width / 2, height / 2, 90, 255);
-  serverAttractor = new Attractor(width / 2, height / 2, 90, 100);
+  clientAttractor = new Attractor(width / 2, height / 2, 60, 255);
+  serverAttractor = new Attractor(width / 2, height / 2, 60, 100);
   // border repellers
   setBorder();
   // particles
-  for (var i = 0; i < 1000; i++) {
+  for (var i = 0; i < 800; i++) {
     particles.push(new Particle(width / 2, height / 2, col));
   }
 }
@@ -83,7 +74,6 @@ function draw() {
     if (targetID) clientAttractor.send();
   } else {
     factorClient = 0;
-    clientAttractor.update(width / 2, height / 2);
   }
   // server attractor events
   if (touchServer) {
@@ -92,14 +82,11 @@ function draw() {
   } else {
     factorServer = 0;
   }
-  // global events
-  if (mouseIsPressed && touchServer) {
-    distance = clientAttractor.pos.dist(serverAttractor.pos);
-  }
   // server inactivity
   touchServer = false;
 }
 function overlap() {
+  distance = clientAttractor.pos.dist(serverAttractor.pos);
   return distance < clientAttractor.width && mouseIsPressed && touchServer;
 }
 function setBorder() {
@@ -127,7 +114,7 @@ function setBorder() {
   resizeCanvas(container.offsetWidth, container.offsetHeight);
 }
 function hasTouch() {
-  var hasTouchScreen = false;
+  let hasTouchScreen = false;
   if ("maxTouchPoints" in navigator) {
     hasTouchScreen = navigator.maxTouchPoints > 0;
   } else if ("msMaxTouchPoints" in navigator) {

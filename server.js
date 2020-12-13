@@ -12,16 +12,15 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     updateUsers();
   });
-  // custom event
+  // position
   socket.on("pos", ({ target, pos }) => {
-    // console.log("recieved");
     io.to(target).emit("pos", pos);
   });
 });
 
 function updateUsers() {
-  io.clients((error, clients) => {
-    if (error) console.log(errorMessage + "(client count)");
+  io.clients((err, clients) => {
+    if (err) console.log(err);
     console.log("number of users: " + clients.length);
     console.log("client list: " + clients);
     io.emit("clients", clients);
