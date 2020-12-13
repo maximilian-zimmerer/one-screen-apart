@@ -53,7 +53,7 @@ function draw() {
       particles[i].magnetise(repellers[j], true, 1);
     }
     overlap()
-      ? (particles[i].color = random(100, 225))
+      ? (particles[i].color = random(30, 225))
       : (particles[i].color = 225);
     particles[i].update();
     particles[i].show();
