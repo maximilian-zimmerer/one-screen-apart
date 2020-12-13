@@ -43,19 +43,18 @@ function draw() {
   // particles
   for (var i = 0; i < particles.length; i++) {
     // client attractor
-    if (mouseIsPressed) {
+    if (mouseIsPressed)
       particles[i].magnetise(clientAttractor.pos, overlap(), factorClient);
-    }
     // server attractor
-    if (targetID && touchServer) {
+    if (touchServer)
       particles[i].magnetise(serverAttractor.pos, overlap(), factorServer);
-    } else {
-      serverAttractor.update(width / 2, height / 2);
-    }
     // repel from repellers
     for (var j = 0; j < repellers.length; j++) {
       particles[i].magnetise(repellers[j], true, 1);
     }
+    overlap()
+      ? (particles[i].color = random(100, 225))
+      : (particles[i].color = 225);
     particles[i].update();
     particles[i].show();
   }
@@ -70,14 +69,14 @@ function draw() {
     clientAttractor.update(width / 2, height / 2);
   }
   // server attractor events
-  if (targetID && touchServer) {
+  if (touchServer) {
     factorServer = 2;
     serverAttractor.show();
   } else {
     factorServer = 0;
   }
   // global events
-  if (targetID && mouseIsPressed && touchServer) {
+  if (mouseIsPressed && touchServer) {
     distance = clientAttractor.pos.dist(serverAttractor.pos);
   }
   // server inactivity

@@ -25,7 +25,8 @@ let clientAttractor, serverAttractor;
 
 class Particle {
   constructor(x, y) {
-    this.color = color("#e1e1e1");
+    // this.color = color("#e1e1e1");
+    this.color = 225;
     this.pos = createVector(x, y);
     this.prev = createVector(x, y);
     this.vel = p5.Vector.random2D();
@@ -35,7 +36,7 @@ class Particle {
   }
   show() {
     strokeWeight(3);
-    stroke(this.color);
+    stroke(this.color, this.color, this.color);
     line(this.pos.x, this.pos.y, this.prev.x, this.prev.y);
     this.prev.x = this.pos.x;
     this.prev.y = this.pos.y;
