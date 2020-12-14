@@ -48,6 +48,22 @@ function setup() {
 }
 function draw() {
   background(color("#1e1e1e"));
+  // client attractor events
+  if (mouseIsPressed) {
+    factorClient = 2;
+    clientAttractor.update(mouseX, mouseY);
+    clientAttractor.show();
+    if (targetID) clientAttractor.send();
+  } else {
+    factorClient = 0;
+  }
+  // server attractor events
+  if (touchServer) {
+    factorServer = 2;
+    serverAttractor.show();
+  } else {
+    factorServer = 0;
+  }
   // particles
   for (var i = 0; i < particles.length; i++) {
     // client attractor
@@ -68,22 +84,6 @@ function draw() {
     }
     particles[i].update();
     particles[i].show();
-  }
-  // client attractor events
-  if (mouseIsPressed) {
-    factorClient = 2;
-    clientAttractor.update(mouseX, mouseY);
-    clientAttractor.show();
-    if (targetID) clientAttractor.send();
-  } else {
-    factorClient = 0;
-  }
-  // server attractor events
-  if (touchServer) {
-    factorServer = 2;
-    serverAttractor.show();
-  } else {
-    factorServer = 0;
   }
   // server inactivity
   touchServer = false;

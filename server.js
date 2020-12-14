@@ -17,7 +17,6 @@ io.on("connection", (socket) => {
     io.to(target).emit("pos", pos);
   });
 });
-
 function updateUsers() {
   io.clients((err, clients) => {
     if (err) console.log(err);
@@ -26,8 +25,6 @@ function updateUsers() {
     io.emit("clients", clients);
   });
 }
-
-// listen for requests
 const listener = server.listen(port, () => {
   console.log(`Server is listening on port ${listener.address().port}`);
 });
