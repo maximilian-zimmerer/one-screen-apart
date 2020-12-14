@@ -1,3 +1,4 @@
+factorBounds = 1;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
@@ -74,13 +75,15 @@ function draw() {
       particles[i].magnetise(serverAttractor.pos, overlap(), factorServer);
     // repel from repellers
     for (var j = 0; j < repellers.length; j++) {
-      particles[i].magnetise(repellers[j], true, 1);
+      particles[i].magnetise(repellers[j], true, factorBounds);
     }
     // overlap event
     if (overlap()) {
       particles[i].color = random(30, 225);
+      factorBounds = 0.5;
     } else {
       particles[i].color = col;
+      factorBounds = 1;
     }
     particles[i].update();
     particles[i].show();

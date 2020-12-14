@@ -20,8 +20,8 @@ let topLeft,
 
 let bool = false;
 let particles = [];
-let factorClient, factorServer;
 let clientAttractor, serverAttractor;
+let factorClient, factorServer, factorBounds;
 
 const socket = io();
 const status = $(".status");
