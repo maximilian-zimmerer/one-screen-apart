@@ -22,7 +22,7 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  /* border: 1px solid green; */
+  border: 1px solid green;
 }
 .notification-wrapper {
   z-index: 1;
@@ -46,7 +46,7 @@ body {
   display: none;
   position: fixed;
   color: #808080;
-  /* border: 1px solid red; */
+  border: 1px solid red;
 }
 #canvas-wrapper {
   z-index: 0;
@@ -54,5 +54,5 @@ body {
   height: 100%;
   align-self: flex-end;
   justify-self: flex-end;
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
 }
