@@ -20,8 +20,7 @@ let topLeft,
 
 let bool = false;
 let particles = [];
-let factorClient = 3;
-let factorServer = 3;
+let factorClient, factorServer;
 let clientAttractor, serverAttractor;
 
 const socket = io();
