@@ -78,6 +78,7 @@ function draw() {
     // overlap event
     if (overlap()) {
       particles[i].color = random(30, 225);
+      k;
       factorBounds = 0.5;
     } else {
       particles[i].color = col;

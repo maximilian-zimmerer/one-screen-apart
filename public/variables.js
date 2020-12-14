@@ -32,7 +32,6 @@ const container = document.getElementById("canvas-wrapper");
 
 class Particle {
   constructor(x, y, color) {
-    // this.color = color("#e1e1e1");
     this.color = color;
     this.pos = createVector(x, y);
     this.prev = createVector(x, y);
