@@ -35,7 +35,7 @@ socket.on("pos", (pos) => {
   touchServer = true;
 });
 function setup() {
-  canvas = createCanvas(container.offsetWidth, container.offsetHeight);
+  canvas = createCanvas(window.innerWidth, window.innerHeight);
   canvas.parent("canvas-wrapper");
   // mouse clientAttractor
   clientAttractor = new Attractor(width / 2, height / 2, 60, 255);
@@ -97,16 +97,13 @@ function overlap() {
 }
 function setBorder() {
   topLeft = createVector(0, 0);
-  topRight = createVector(container.offsetWidth, 0);
-  bottomLeft = createVector(0, container.offsetHeight);
-  topMiddle = createVector(container.offsetWidth / 2, 0);
-  middleLeft = createVector(0, container.offsetHeight / 2);
-  bottomRight = createVector(container.offsetWidth, container.offsetHeight);
-  middleRight = createVector(container.offsetWidth, container.offsetHeight / 2);
-  bottomMiddle = createVector(
-    container.offsetWidth / 2,
-    container.offsetHeight
-  );
+  topRight = createVector(window.innerWidth, 0);
+  bottomLeft = createVector(0, window.innerHeight);
+  topMiddle = createVector(window.innerWidth / 2, 0);
+  middleLeft = createVector(0, window.innerHeight / 2);
+  bottomRight = createVector(window.innerWidth, window.innerHeight);
+  middleRight = createVector(window.innerWidth, window.innerHeight / 2);
+  bottomMiddle = createVector(window.innerWidth / 2, window.innerHeight);
   repellers = [
     topLeft,
     topRight,
@@ -117,7 +114,7 @@ function setBorder() {
     bottomRight,
     bottomMiddle,
   ];
-  resizeCanvas(container.offsetWidth, container.offsetHeight);
+  resizeCanvas(window.innerWidth, window.innerHeight);
 }
 function hasTouch() {
   let hasTouchScreen = false;
