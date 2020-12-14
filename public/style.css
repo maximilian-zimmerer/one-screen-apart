@@ -32,6 +32,7 @@ body {
   /* backdrop-filter: blur(2px); */
 }
 .status-wrapper {
+  gap: 0.5em;
   bottom: 0;
   z-index: 1;
   width: 100%;
@@ -40,9 +41,33 @@ body {
   display: none;
   position: fixed;
   color: #808080;
+  align-items: center;
+  /* border: 1px solid yellow; */
+}
+.loader-wrapper {
+  width: 0.5em;
+  height: 0.5em;
+  display: inline;
+}
+.loader {
+  fill: #808080;
+}
+.blink {
+  animation: blink 1s infinite;
 }
 #canvas-wrapper {
   z-index: 0;
   width: 100%;
   height: 100%;
+}
+@keyframes blink {
+  0% {
+    fill: #1e1e1e;
+  }
+  50% {
+    fill: #808080;
+  }
+  100% {
+    fill: #1e1e1e;
+  }
 }

@@ -10,6 +10,7 @@ $(document).ready(() => {
   } else {
     col = 225;
     statusWrapper.fadeIn();
+    statusWrapper.css("display", "flex");
   }
 });
 $(window).on("resize", () => {
@@ -25,10 +26,7 @@ socket.on("clients", (clients) => {
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
-  targetID
-    ? status.html("You're connected.")
-    : status.html("Waiting for a friend...");
-  // console.log("2. target: " + targetID);
+  toggleStatus(targetID);
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
@@ -138,4 +136,14 @@ function hasTouch() {
     }
   }
   return hasTouchScreen;
+}
+// jquery animations
+function toggleStatus(bool) {
+  if (bool) {
+    loader.removeClass("blink");
+    status.html("You're connected");
+  } else {
+    loader.addClass("blink");
+    status.html("Waiting for a friend");
+  }
 }
