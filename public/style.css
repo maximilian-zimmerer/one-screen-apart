@@ -32,7 +32,6 @@ body {
   /* backdrop-filter: blur(2px); */
 }
 .status-wrapper {
-  gap: 0.5em;
   bottom: 0;
   z-index: 1;
   width: 100%;
@@ -43,6 +42,9 @@ body {
   color: #808080;
   align-items: center;
   /* border: 1px solid yellow; */
+}
+.status {
+  padding-left: 0.5em;
 }
 .loader-wrapper {
   width: 0.5em;
