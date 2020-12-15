@@ -26,9 +26,10 @@ socket.on("clients", (clients) => {
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
-  if (userCount < 2) counter.fadeOut();
+  // if (userCount < 2) counter.fadeOut();
   sendLocation();
   toggleStatus();
+  toggleCounter();
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
@@ -39,10 +40,11 @@ socket.on("loc", (loc) => {
     lastLocation = loc;
     distance =
       getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon) + 0.1;
-    console.log(distance);
   }
-  distance ? counter.fadeIn() : counter.fadeOut();
+  // distance ? counter.fadeIn() : counter.fadeOut();
+  // counter.html("Distance — " + Math.round(distance) + "km");
   counter.html(Math.round(distance) + "km");
+  toggleCounter();
 });
 function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
@@ -166,7 +168,7 @@ function sendLocation() {
       socket.emit("loc", { target: targetID, loc: myLocation });
     }, 1000);
   } else {
-    window.setTimeout(sendLocation, 100);
+    setTimeout(sendLocation, 500);
   }
 }
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -190,9 +192,24 @@ function deg2rad(deg) {
 function toggleStatus() {
   if (targetID) {
     loader.removeClass("blink");
-    status.html("Connected");
+    // status.html("Connected");
+    status.fadeOut(() => {
+      status.html("Connected");
+      status.fadeIn();
+    });
   } else {
     loader.addClass("blink");
-    status.html("Searching");
+    // status.html("Searching");
+    status.fadeOut(() => {
+      status.html("Searching");
+      status.fadeIn();
+    });
+  }
+}
+function toggleCounter() {
+  if (distance) {
+    counter.fadeIn();
+  } else if (!distance || userCount < 2) {
+    counter.fadeOut();
   }
 }
