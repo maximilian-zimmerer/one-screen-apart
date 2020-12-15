@@ -29,10 +29,10 @@ socket.on("clients", (clients) => {
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
-  // if (userCount < 2) counter.fadeOut();
   sendLocation();
   toggleStatus();
   toggleCounter();
+  resetParticles();
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
@@ -218,4 +218,8 @@ function toggleCounter() {
   } else if (!distance || userCount < 2) {
     counter.fadeOut();
   }
+}
+
+function resetParticles() {
+  if (particles.length > particlesMin) particles.length = particlesMin;
 }
