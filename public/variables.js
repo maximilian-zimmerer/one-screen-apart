@@ -3,6 +3,7 @@ let col,
   myID,
   start,
   canvas,
+  sender,
   myIndex,
   clients,
   targetID,
@@ -14,9 +15,6 @@ let col,
   lastLocation,
   particlesMin,
   particlesMax;
-
-// intervals
-let sender, resetter;
 
 let topLeft,
   topRight,

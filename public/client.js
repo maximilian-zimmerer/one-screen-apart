@@ -26,16 +26,14 @@ socket.on("connect", () => {
 });
 socket.on("clients", (clients) => {
   clearInterval(sender);
-  clearInterval(resetter);
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
   console.log("targetID: " + targetID);
-  // hide counter
   toggleStatus();
-  sender = setInterval(sendLocation, 1000);
-  resetter = setInterval(resetParticles, 10);
+  resetParticles();
   if (userCount < 2) counter.fadeOut();
+  sender = setInterval(sendLocation, 1000);
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
@@ -159,7 +157,7 @@ function hasTouch() {
   return hasTouchScreen;
 }
 function resetParticles() {
-  if (particles.length > particlesMin && !targetID) particles.length -= 10;
+  if (particles.length > particlesMin) particles.length = particlesMin;
 }
 // location
 function getLocation() {
