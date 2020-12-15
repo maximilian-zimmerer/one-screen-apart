@@ -1,5 +1,7 @@
+col = 128;
 factorBounds = 1;
 lastLocation = 0.1;
+particlesMin = 100;
 particlesMax = 1500;
 touchServer = false;
 p5.disableFriendlyErrors = true;
@@ -11,8 +13,6 @@ $(document).ready(() => {
     notification.fadeIn();
     notification.css("display", "flex");
   } else {
-    col = 128;
-    particlesMin = 100;
     statusWrapper.fadeIn();
     statusWrapper.css("display", "flex");
     getLocation();
@@ -157,6 +157,9 @@ function hasTouch() {
   }
   return hasTouchScreen;
 }
+function resetParticles() {
+  if (particles.length > particlesMin) particles.length = particlesMin;
+}
 // location
 function getLocation() {
   navigator.geolocation
@@ -218,8 +221,4 @@ function toggleCounter() {
   } else if (!distance || userCount < 2) {
     counter.fadeOut();
   }
-}
-
-function resetParticles() {
-  if (particles.length > particlesMin) particles.length = particlesMin;
 }
