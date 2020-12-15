@@ -1,8 +1,7 @@
 col = 128;
 factorBounds = 1;
-lastLocation = 0.1;
 particlesMin = 100;
-particlesMax = 1500;
+particlesMax = 2000;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
@@ -26,26 +25,28 @@ socket.on("connect", () => {
   if (!hasTouch()) socket.disconnect();
 });
 socket.on("clients", (clients) => {
+  clearInterval(sender);
+  clearInterval(resetter);
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
-  sendLocation();
+  console.log("targetID: " + targetID);
+  // hide counter
   toggleStatus();
-  toggleCounter();
-  resetParticles();
+  sender = setInterval(sendLocation, 1000);
+  resetter = setInterval(resetParticles, 10);
+  if (userCount < 2) counter.fadeOut();
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
   touchServer = true;
 });
 socket.on("loc", (loc) => {
-  if (loc != lastLocation) {
-    lastLocation = loc;
-    distance =
-      getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon) + 0.1;
-  }
+  console.log("recieved!");
+  distance = getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon);
   counter.html(Math.round(distance) + "km");
-  toggleCounter();
+  // show counter
+  counter.fadeIn();
 });
 function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
@@ -158,7 +159,7 @@ function hasTouch() {
   return hasTouchScreen;
 }
 function resetParticles() {
-  if (particles.length > particlesMin) particles.length = particlesMin;
+  if (particles.length > particlesMin) particles.length -= 10;
 }
 // location
 function getLocation() {
@@ -168,16 +169,18 @@ function getLocation() {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         };
+        console.log("location acquired.");
       })
     : console.log("Can't get location.");
 }
 function sendLocation() {
   if (targetID && myLocation) {
-    setInterval(() => {
-      socket.emit("loc", { target: targetID, loc: myLocation });
-    }, 500);
-  } else {
-    setTimeout(sendLocation, 500);
+    console.log("sent!");
+    socket.emit("loc", { target: targetID, loc: myLocation });
+  } else if (targetID && !myLocation) {
+    console.log("waiting for location.");
+  } else if (!targetID && myLocation) {
+    console.log("waiting for targetID.");
   }
 }
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -200,15 +203,17 @@ function deg2rad(deg) {
 // jquery
 function toggleStatus() {
   if (targetID) {
+    // animate
     loader.removeClass("blink");
-    // status.html("Connected");
     status.fadeOut(() => {
       status.html("Connected");
       status.fadeIn();
     });
   } else {
+    // fade counter
+    counter.fadeOut();
+    // animate
     loader.addClass("blink");
-    // status.html("Searching");
     status.fadeOut(() => {
       status.html("Searching");
       status.fadeIn();
@@ -218,7 +223,7 @@ function toggleStatus() {
 function toggleCounter() {
   if (distance) {
     counter.fadeIn();
-  } else if (!distance || userCount < 2) {
+  } else if (!distance || userCount < 1) {
     counter.fadeOut();
   }
 }

@@ -15,6 +15,9 @@ let col,
   particlesMin,
   particlesMax;
 
+// intervals
+let sender, resetter;
+
 let topLeft,
   topRight,
   topMiddle,
