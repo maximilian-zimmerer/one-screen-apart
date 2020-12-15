@@ -7,7 +7,9 @@ let col,
   distance,
   userCount,
   repellers,
-  touchServer;
+  myLocation,
+  touchServer,
+  lastLocation;
 
 let topLeft,
   topRight,
@@ -26,6 +28,7 @@ let factorClient, factorServer, factorBounds;
 const socket = io();
 const status = $(".status");
 const loader = $(".loader");
+const counter = $(".distance");
 const statusWrapper = $(".status-wrapper");
 const notification = $(".notification-wrapper");
 const container = document.getElementById("canvas-wrapper");

@@ -57,6 +57,11 @@ body {
 .blink {
   animation: blink 1s infinite;
 }
+.distance {
+  flex: 1;
+  display: none;
+  text-align: right;
+}
 #canvas-wrapper {
   z-index: 0;
   width: 100%;

@@ -1,4 +1,5 @@
 factorBounds = 1;
+lastLocation = 0.1;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
@@ -11,6 +12,7 @@ $(document).ready(() => {
     col = 225;
     statusWrapper.fadeIn();
     statusWrapper.css("display", "flex");
+    getLocation();
   }
 });
 $(window).on("resize", () => {
@@ -18,19 +20,29 @@ $(window).on("resize", () => {
 });
 socket.on("connect", () => {
   myID = socket.id;
-  console.log("1. my id: " + socket.id);
-  // disconnect if not on mobile
   if (!hasTouch()) socket.disconnect();
 });
 socket.on("clients", (clients) => {
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
-  toggleStatus(targetID);
+  if (userCount < 2) counter.fadeOut();
+  sendLocation();
+  toggleStatus();
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
   touchServer = true;
+});
+socket.on("loc", (loc) => {
+  if (loc != lastLocation) {
+    lastLocation = loc;
+    distance =
+      getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon) + 0.1;
+    console.log(distance);
+  }
+  distance ? counter.fadeIn() : counter.fadeOut();
+  counter.html(Math.round(distance) + "km");
 });
 function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
@@ -138,13 +150,50 @@ function hasTouch() {
   }
   return hasTouchScreen;
 }
-// jquery animations
-function toggleStatus(bool) {
-  if (bool) {
+// location
+function getLocation() {
+  navigator.geolocation
+    ? navigator.geolocation.getCurrentPosition((position) => {
+        myLocation = {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        };
+      })
+    : console.log("Can't get location.");
+}
+function sendLocation() {
+  if (targetID && myLocation) {
+    setInterval(() => {
+      socket.emit("loc", { target: targetID, loc: myLocation });
+    }, 1000);
+  } else {
+    window.setTimeout(sendLocation, 100);
+  }
+}
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c;
+  return d;
+}
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+// jquery
+function toggleStatus() {
+  if (targetID) {
     loader.removeClass("blink");
-    status.html("You're connected");
+    status.html("Connected");
   } else {
     loader.addClass("blink");
-    status.html("Waiting for a friend");
+    status.html("Searching");
   }
 }

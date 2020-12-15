@@ -16,6 +16,10 @@ io.on("connection", (socket) => {
   socket.on("pos", ({ target, pos }) => {
     io.to(target).emit("pos", pos);
   });
+  // location
+  socket.on("loc", ({ target, loc }) => {
+    io.to(target).emit("loc", loc);
+  });
 });
 function updateUsers() {
   io.clients((err, clients) => {
