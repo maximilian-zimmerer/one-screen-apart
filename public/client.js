@@ -1,18 +1,18 @@
-max = 1500;
 factorBounds = 1;
 lastLocation = 0.1;
+particlesMax = 1500;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
 $(document).ready(() => {
   if (!hasTouch()) {
     col = 60;
-    start = 500;
+    particlesMin = 500;
     notification.fadeIn();
     notification.css("display", "flex");
   } else {
     col = 128;
-    start = 500;
+    particlesMin = 100;
     statusWrapper.fadeIn();
     statusWrapper.css("display", "flex");
     getLocation();
@@ -43,7 +43,6 @@ socket.on("loc", (loc) => {
     lastLocation = loc;
     distance =
       getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon) + 0.1;
-    // console.log(distance);
   }
   counter.html(Math.round(distance) + "km");
   toggleCounter();
@@ -57,7 +56,7 @@ function setup() {
   // border repellers
   setBorder();
   // particles
-  for (var i = 0; i < start; i++) {
+  for (var i = 0; i < particlesMin; i++) {
     particles.push(new Particle(width / 2, height / 2, col));
   }
 }
@@ -104,7 +103,7 @@ function draw() {
     particles[i].show();
   }
   // add new particles
-  if (overlap() && particles.length < max) {
+  if (overlap() && particles.length < particlesMax) {
     particles.push(new Particle(random(width), random(height), col));
   }
   // server inactivity
@@ -137,10 +136,10 @@ function setBorder() {
 }
 function hasTouch() {
   let hasTouchScreen = false;
-  if ("maxTouchPoints" in navigator) {
-    hasTouchScreen = navigator.maxTouchPoints > 0;
-  } else if ("msMaxTouchPoints" in navigator) {
-    hasTouchScreen = navigator.msMaxTouchPoints > 0;
+  if ("particlesMaxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.particlesMaxTouchPoints > 0;
+  } else if ("msparticlesMaxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.msparticlesMaxTouchPoints > 0;
   } else {
     var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
     if (mQ && mQ.media === "(pointer:coarse)") {

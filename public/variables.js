@@ -11,7 +11,9 @@ let col,
   repellers,
   myLocation,
   touchServer,
-  lastLocation;
+  lastLocation,
+  particlesMin,
+  particlesMax;
 
 let topLeft,
   topRight,
