@@ -60,6 +60,7 @@ body {
 .distance {
   flex: 1;
   display: none;
+  color: #808080;
   text-align: right;
 }
 #canvas-wrapper {

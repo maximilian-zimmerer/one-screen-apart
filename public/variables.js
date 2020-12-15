@@ -1,5 +1,7 @@
 let col,
+  max,
   myID,
+  start,
   canvas,
   myIndex,
   clients,

@@ -1,3 +1,4 @@
+max = 1500;
 factorBounds = 1;
 lastLocation = 0.1;
 touchServer = false;
@@ -6,10 +7,12 @@ p5.disableFriendlyErrors = true;
 $(document).ready(() => {
   if (!hasTouch()) {
     col = 60;
+    start = 500;
     notification.fadeIn();
     notification.css("display", "flex");
   } else {
-    col = 225;
+    col = 128;
+    start = 500;
     statusWrapper.fadeIn();
     statusWrapper.css("display", "flex");
     getLocation();
@@ -40,9 +43,8 @@ socket.on("loc", (loc) => {
     lastLocation = loc;
     distance =
       getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon) + 0.1;
+    // console.log(distance);
   }
-  // distance ? counter.fadeIn() : counter.fadeOut();
-  // counter.html("Distance — " + Math.round(distance) + "km");
   counter.html(Math.round(distance) + "km");
   toggleCounter();
 });
@@ -55,7 +57,7 @@ function setup() {
   // border repellers
   setBorder();
   // particles
-  for (var i = 0; i < 800; i++) {
+  for (var i = 0; i < start; i++) {
     particles.push(new Particle(width / 2, height / 2, col));
   }
 }
@@ -77,7 +79,7 @@ function draw() {
   } else {
     factorServer = 0;
   }
-  // particles
+  // particle objects
   for (var i = 0; i < particles.length; i++) {
     // client attractor
     if (mouseIsPressed)
@@ -91,7 +93,8 @@ function draw() {
     }
     // overlap event
     if (overlap()) {
-      particles[i].color = random(30, 225);
+      // change color
+      particles[i].color = 255;
       factorBounds = 0.5;
     } else {
       particles[i].color = col;
@@ -99,6 +102,10 @@ function draw() {
     }
     particles[i].update();
     particles[i].show();
+  }
+  // add new particles
+  if (overlap() && particles.length < max) {
+    particles.push(new Particle(random(width), random(height), col));
   }
   // server inactivity
   touchServer = false;
@@ -166,7 +173,7 @@ function sendLocation() {
   if (targetID && myLocation) {
     setInterval(() => {
       socket.emit("loc", { target: targetID, loc: myLocation });
-    }, 1000);
+    }, 500);
   } else {
     setTimeout(sendLocation, 500);
   }
