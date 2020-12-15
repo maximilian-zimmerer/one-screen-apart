@@ -159,7 +159,7 @@ function hasTouch() {
   return hasTouchScreen;
 }
 function resetParticles() {
-  if (particles.length > particlesMin) particles.length -= 10;
+  if (particles.length > particlesMin && !targetID) particles.length -= 10;
 }
 // location
 function getLocation() {
