@@ -1,8 +1,8 @@
 col = 128;
 padding = 10;
 factorBounds = 1;
-particlesMin = 300;
-particlesMax = 1500;
+particlesMin = 250;
+particlesMax = 800;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
@@ -42,7 +42,9 @@ socket.on("pos", (pos) => {
 socket.on("loc", (loc) => {
   // console.log("recieved!");
   distance = getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon); // calculate distance
-  counter.html(Math.round(distance * 100) / 100 + "km"); // update counter
+  distance =
+    distance < 100 ? Math.round(distance * 100) / 100 : Math.round(distance); // conditional rounding
+  counter.html(distance + "km"); // update counter
   counter.fadeIn(); // show counter
 });
 function setup() {
@@ -89,12 +91,15 @@ function draw() {
     }
     // overlap event
     if (overlap()) {
-      particles[i].overlap(clientAttractor, maxDistance);
+      $("canvas").addClass("invert");
+      particles[i].mapColor(clientAttractor.pos, maxDistance);
       factorBounds = 0.5; // lower border attraction
     } else {
-      particles[i].color = col; // reset color
+      $("canvas").removeClass("invert");
+      particles[i].mapColor(canvasCenter, maxDistance);
       factorBounds = 1; // reset border attraction
     }
+    particles[i].mapColor(canvasCenter, maxDistance);
     particles[i].update();
     particles[i].show();
   }
@@ -113,7 +118,7 @@ function draw() {
 function overlap() {
   distance = clientAttractor.pos.dist(serverAttractor.pos);
   return distance < clientAttractor.width && mouseIsPressed && touchServer;
-  // return distance < clientAttractor.width; // // testing
+  // return distance < clientAttractor.width; // testing
 }
 function setBorder() {
   topLeft = createVector(0, 0);
@@ -139,6 +144,8 @@ function setBorder() {
   let corner1 = createVector(0, 0);
   let corner2 = createVector(window.innerWidth, window.innerHeight);
   maxDistance = corner1.dist(corner2);
+  // set canvas center
+  canvasCenter = createVector(window.innerWidth / 2, window.innerHeight / 2);
 }
 function hasTouch() {
   let hasTouchScreen = false;

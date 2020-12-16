@@ -10,6 +10,7 @@ let col,
   myLocation,
   touchServer,
   maxDistance,
+  canvasCenter,
   particlesMin,
   particlesMax;
 
@@ -67,8 +68,8 @@ class Particle {
     if (d < 60) force.mult(-60);
     this.acc.add(force);
   }
-  overlap(attractor, maxDistance) {
-    let distance = this.pos.dist(attractor.pos);
+  mapColor(vector, maxDistance) {
+    let distance = this.pos.dist(vector);
     let mappedColor = map(distance, maxDistance / 2, 0, 30, 225, true);
     this.color = mappedColor;
   }
