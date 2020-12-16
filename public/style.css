@@ -63,17 +63,10 @@ body {
   color: #808080;
   text-align: right;
 }
-.invert {
-  filter: invert(1);
-  transition: 0.3s;
-}
 #canvas-wrapper {
   z-index: 0;
   width: 100%;
   height: 100%;
-}
-canvas {
-  transition: 0.3s;
 }
 @keyframes blink {
   0% {

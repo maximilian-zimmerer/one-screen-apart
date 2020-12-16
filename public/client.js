@@ -2,8 +2,8 @@ minCol = 30;
 maxCol = 225;
 padding = 10;
 factorBounds = 1;
-particlesMin = 250;
-particlesMax = 800;
+particlesMin = 100;
+particlesMax = 500;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
@@ -91,15 +91,14 @@ function draw() {
     }
     // overlap event
     if (overlap()) {
-      $("canvas").addClass("invert");
-      particles[i].mapColor(clientAttractor.pos, maxDistance, true);
       factorBounds = 0.5; // lower border attraction
+      particles[i].maxCol = 225; // set bright max color
+      particles[i].mapColor(clientAttractor.pos, maxDistance, true); // map color to attractor
     } else {
-      $("canvas").removeClass("invert");
-      particles[i].mapColor(canvasCenter, maxDistance, true);
       factorBounds = 1; // reset border attraction
+      particles[i].maxCol = 128; // set dark max color
     }
-    particles[i].mapColor(canvasCenter, maxDistance, hasTouch());
+    particles[i].mapColor(canvasCenter, maxDistance, hasTouch()); // map color to canvas center
     particles[i].update();
     particles[i].show();
   }
