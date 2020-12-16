@@ -1,6 +1,7 @@
 col = 128;
+padding = 10;
 factorBounds = 1;
-particlesMin = 200;
+particlesMin = 300;
 particlesMax = 1500;
 touchServer = false;
 p5.disableFriendlyErrors = true;
@@ -99,14 +100,21 @@ function draw() {
     particles[i].show();
   }
   // add particles
-  if (overlap() && particles.length < particlesMax) {
-    particles.push(new Particle(random(width), random(height), col));
-  }
+  if (overlap())
+    particles.push(
+      new Particle(
+        random(random(padding, 20), random(width - 20, width - padding)),
+        random(random(padding, 20), random(height - 20, height - padding)),
+        col
+      )
+    );
+  if (particles.length > particlesMax) particles.splice(0, 1); // delete first particle if limit is reached
   touchServer = false; // server mouse inactivity
 }
 function overlap() {
   distance = clientAttractor.pos.dist(serverAttractor.pos);
   return distance < clientAttractor.width && mouseIsPressed && touchServer;
+  // return distance < clientAttractor.width; // // testing
 }
 function setBorder() {
   topLeft = createVector(0, 0);
