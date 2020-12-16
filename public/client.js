@@ -27,13 +27,12 @@ socket.on("connect", () => {
 });
 socket.on("clients", (clients) => {
   clearInterval(sender); // clear interval before initiating
-  userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
   // console.log("targetID: " + targetID);
   toggleStatus(); // show & hide status
   resetParticles(); // reset particles on disconnect
-  if (userCount < 2) counter.fadeOut(); // hide user count safety
+  if (clients.length < 2) counter.fadeOut(); // hide user count safety
   sender = setInterval(sendLocation, 1000); // send location interval
 });
 socket.on("pos", (pos) => {

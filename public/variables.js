@@ -1,20 +1,15 @@
 let col,
-  max,
   myID,
-  start,
   canvas,
   sender,
   padding,
   myIndex,
-  clients,
   targetID,
   distance,
-  userCount,
   repellers,
   myLocation,
   touchServer,
   maxDistance,
-  lastLocation,
   particlesMin,
   particlesMax;
 
@@ -27,7 +22,6 @@ let topLeft,
   middleRight,
   bottomMiddle;
 
-let bool = false;
 let particles = [];
 let clientAttractor, serverAttractor;
 let factorClient, factorServer, factorBounds;
@@ -38,7 +32,6 @@ const loader = $(".loader");
 const counter = $(".distance");
 const statusWrapper = $(".status-wrapper");
 const notification = $(".notification-wrapper");
-const container = document.getElementById("canvas-wrapper");
 
 class Particle {
   constructor(x, y, color) {
