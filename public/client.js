@@ -1,7 +1,7 @@
 col = 128;
 factorBounds = 1;
-particlesMin = 100;
-particlesMax = 2000;
+particlesMin = 200;
+particlesMax = 1500;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
@@ -22,37 +22,35 @@ $(window).on("resize", () => {
 });
 socket.on("connect", () => {
   myID = socket.id;
-  if (!hasTouch()) socket.disconnect();
+  if (!hasTouch()) socket.disconnect(); // disconnect desktops
 });
 socket.on("clients", (clients) => {
-  clearInterval(sender);
+  clearInterval(sender); // clear interval before initiating
   userCount = clients.length;
   myIndex = clients.indexOf(myID);
   targetID = myIndex % 2 == 0 ? clients[myIndex + 1] : clients[myIndex - 1];
-  console.log("targetID: " + targetID);
-  toggleStatus();
-  resetParticles();
-  if (userCount < 2) counter.fadeOut();
-  sender = setInterval(sendLocation, 1000);
+  // console.log("targetID: " + targetID);
+  toggleStatus(); // show & hide status
+  resetParticles(); // reset particles on disconnect
+  if (userCount < 2) counter.fadeOut(); // hide user count safety
+  sender = setInterval(sendLocation, 1000); // send location interval
 });
 socket.on("pos", (pos) => {
   serverAttractor.update(pos.x, pos.y);
   touchServer = true;
 });
 socket.on("loc", (loc) => {
-  console.log("recieved!");
-  distance = getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon);
-  counter.html(Math.round(distance) + "km");
-  // show counter
-  counter.fadeIn();
+  // console.log("recieved!");
+  distance = getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon); // calculate distance
+  counter.html(Math.round(distance) + "km"); // update counter
+  counter.fadeIn(); // show counter
 });
 function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
   canvas.parent("canvas-wrapper");
-  // mouse clientAttractor
+  // set up attractors
   clientAttractor = new Attractor(width / 2, height / 2, 60, 255);
   serverAttractor = new Attractor(width / 2, height / 2, 60, 100);
-  // border repellers
   setBorder();
   // particles
   for (var i = 0; i < particlesMin; i++) {
@@ -77,7 +75,7 @@ function draw() {
   } else {
     factorServer = 0;
   }
-  // particle objects
+  // particles
   for (var i = 0; i < particles.length; i++) {
     // client attractor
     if (mouseIsPressed)
@@ -85,28 +83,26 @@ function draw() {
     // server attractor
     if (touchServer)
       particles[i].magnetise(serverAttractor.pos, overlap(), factorServer);
-    // repel from repellers
+    // repellers
     for (var j = 0; j < repellers.length; j++) {
       particles[i].magnetise(repellers[j], true, factorBounds);
     }
     // overlap event
     if (overlap()) {
-      // change color
-      particles[i].color = 255;
-      factorBounds = 0.5;
+      particles[i].color = 255; // change color
+      factorBounds = 0.5; // lower border attraction
     } else {
-      particles[i].color = col;
-      factorBounds = 1;
+      particles[i].color = col; // reset color
+      factorBounds = 1; // reset border attraction
     }
     particles[i].update();
     particles[i].show();
   }
-  // add new particles
+  // add particles
   if (overlap() && particles.length < particlesMax) {
     particles.push(new Particle(random(width), random(height), col));
   }
-  // server inactivity
-  touchServer = false;
+  touchServer = false; // server mouse inactivity
 }
 function overlap() {
   distance = clientAttractor.pos.dist(serverAttractor.pos);
@@ -143,11 +139,11 @@ function hasTouch() {
     var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
     if (mQ && mQ.media === "(pointer:coarse)") {
       hasTouchScreen = !!mQ.matches;
-      // Fallback
+      // fallback
     } else if ("orientation" in window) {
       hasTouchScreen = true;
     } else {
-      // Agent Sniffing Fallback
+      // agent sniffing fallback
       var UA = navigator.userAgent;
       hasTouchScreen =
         /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
@@ -167,18 +163,18 @@ function getLocation() {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         };
-        console.log("location acquired.");
+        // console.log("location acquired.");
       })
     : console.log("Can't get location.");
 }
 function sendLocation() {
   if (targetID && myLocation) {
-    console.log("sent!");
+    // console.log("sent!");
     socket.emit("loc", { target: targetID, loc: myLocation });
   } else if (targetID && !myLocation) {
-    console.log("waiting for location.");
+    // console.log("waiting for location.");
   } else if (!targetID && myLocation) {
-    console.log("waiting for targetID.");
+    // console.log("waiting for targetID.");
   }
 }
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -201,27 +197,17 @@ function deg2rad(deg) {
 // jquery
 function toggleStatus() {
   if (targetID) {
-    // animate
-    loader.removeClass("blink");
+    loader.removeClass("blink"); // remove blinker class
     status.fadeOut(() => {
       status.html("Connected");
       status.fadeIn();
     });
   } else {
-    // fade counter
-    counter.fadeOut();
-    // animate
-    loader.addClass("blink");
+    counter.fadeOut(); // fade counter
+    loader.addClass("blink"); // add blinker class
     status.fadeOut(() => {
       status.html("Searching");
       status.fadeIn();
     });
-  }
-}
-function toggleCounter() {
-  if (distance) {
-    counter.fadeIn();
-  } else if (!distance || userCount < 1) {
-    counter.fadeOut();
   }
 }
