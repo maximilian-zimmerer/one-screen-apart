@@ -1,4 +1,5 @@
-col = 128;
+minCol = 30;
+maxCol = 225;
 padding = 10;
 factorBounds = 1;
 particlesMin = 250;
@@ -8,7 +9,6 @@ p5.disableFriendlyErrors = true;
 
 $(document).ready(() => {
   if (!hasTouch()) {
-    col = 60;
     particlesMin = 500;
     notification.fadeIn();
     notification.css("display", "flex");
@@ -56,7 +56,7 @@ function setup() {
   setBorder();
   // particles
   for (var i = 0; i < particlesMin; i++) {
-    particles.push(new Particle(width / 2, height / 2, col));
+    particles.push(new Particle(width / 2, height / 2, minCol, maxCol));
   }
 }
 function draw() {
@@ -92,14 +92,14 @@ function draw() {
     // overlap event
     if (overlap()) {
       $("canvas").addClass("invert");
-      particles[i].mapColor(clientAttractor.pos, maxDistance);
+      particles[i].mapColor(clientAttractor.pos, maxDistance, true);
       factorBounds = 0.5; // lower border attraction
     } else {
       $("canvas").removeClass("invert");
-      particles[i].mapColor(canvasCenter, maxDistance);
+      particles[i].mapColor(canvasCenter, maxDistance, true);
       factorBounds = 1; // reset border attraction
     }
-    particles[i].mapColor(canvasCenter, maxDistance);
+    particles[i].mapColor(canvasCenter, maxDistance, hasTouch());
     particles[i].update();
     particles[i].show();
   }
@@ -109,7 +109,8 @@ function draw() {
       new Particle(
         random(random(padding, 20), random(width - 20, width - padding)),
         random(random(padding, 20), random(height - 20, height - padding)),
-        col
+        minCol,
+        maxCol
       )
     );
   if (particles.length > particlesMax) particles.splice(0, 1); // delete first particle if limit is reached

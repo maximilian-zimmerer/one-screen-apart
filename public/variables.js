@@ -2,6 +2,8 @@ let col,
   myID,
   canvas,
   sender,
+  minCol,
+  maxCol,
   padding,
   myIndex,
   targetID,
@@ -35,14 +37,16 @@ const statusWrapper = $(".status-wrapper");
 const notification = $(".notification-wrapper");
 
 class Particle {
-  constructor(x, y, color) {
-    this.color = color;
+  constructor(x, y, minCol, maxCol) {
     this.pos = createVector(x, y);
     this.prev = createVector(x, y);
     this.vel = p5.Vector.random2D();
     this.vel.setMag(random(2, 5));
     this.acc = createVector();
+    this.minCol = minCol;
+    this.maxCol = maxCol;
     this.g = 10;
+    this.color;
   }
   show() {
     strokeWeight(3);
@@ -68,9 +72,16 @@ class Particle {
     if (d < 60) force.mult(-60);
     this.acc.add(force);
   }
-  mapColor(vector, maxDistance) {
+  mapColor(vector, maxDistance, bool) {
     let distance = this.pos.dist(vector);
-    let mappedColor = map(distance, maxDistance / 2, 0, 30, 225, true);
+    let mappedColor = map(
+      distance,
+      maxDistance / 2,
+      0,
+      bool ? this.minCol : this.maxCol,
+      bool ? this.maxCol : this.minCol,
+      true
+    );
     this.color = mappedColor;
   }
 }
