@@ -89,7 +89,7 @@ function draw() {
     }
     // overlap event
     if (overlap()) {
-      particles[i].color = 255; // change color
+      particles[i].overlap(clientAttractor, maxDistance);
       factorBounds = 0.5; // lower border attraction
     } else {
       particles[i].color = col; // reset color
@@ -128,6 +128,10 @@ function setBorder() {
     bottomMiddle,
   ];
   resizeCanvas(window.innerWidth, window.innerHeight);
+  // calculate max distance
+  let corner1 = createVector(0, 0);
+  let corner2 = createVector(window.innerWidth, window.innerHeight);
+  maxDistance = corner1.dist(corner2);
 }
 function hasTouch() {
   let hasTouchScreen = false;

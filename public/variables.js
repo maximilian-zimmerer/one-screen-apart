@@ -12,6 +12,7 @@ let col,
   repellers,
   myLocation,
   touchServer,
+  maxDistance,
   lastLocation,
   particlesMin,
   particlesMax;
@@ -71,6 +72,11 @@ class Particle {
     bool ? force.mult(f) : force.mult(-f);
     if (d < 60) force.mult(-60);
     this.acc.add(force);
+  }
+  overlap(attractor, maxDistance) {
+    let distance = this.pos.dist(attractor.pos);
+    let mappedColor = map(distance, maxDistance / 2, 0, 30, 225, true);
+    this.color = mappedColor;
   }
 }
 class Attractor {
