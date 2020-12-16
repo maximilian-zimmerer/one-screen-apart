@@ -43,7 +43,7 @@ socket.on("pos", (pos) => {
 socket.on("loc", (loc) => {
   // console.log("recieved!");
   distance = getDistance(myLocation.lat, myLocation.lon, loc.lat, loc.lon); // calculate distance
-  counter.html(Math.round(distance) + "km"); // update counter
+  counter.html(Math.round(distance * 100) / 100 + "km"); // update counter
   counter.fadeIn(); // show counter
 });
 function setup() {
