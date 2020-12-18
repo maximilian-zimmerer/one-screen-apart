@@ -178,10 +178,6 @@ function sendLocation() {
   if (targetID && myLocation) {
     // console.log("sent!");
     socket.emit("loc", { target: targetID, loc: myLocation });
-  } else if (targetID && !myLocation) {
-    // console.log("waiting for location.");
-  } else if (!targetID && myLocation) {
-    // console.log("waiting for targetID.");
   }
 }
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -234,8 +230,9 @@ function getCounter() {
 function incrementCounter() {
   touchCounter++;
   counter.html(`${touchCounter}`);
-  // update counter (firebase)
-  dbCounter.doc(dbCounterID).update({
-    counter: firebase.firestore.FieldValue.increment(1),
-  });
+  // update firebase counter
+  if (myIndex % 2 != 0)
+    dbCounter.doc(dbCounterID).update({
+      counter: firebase.firestore.FieldValue.increment(1),
+    });
 }
