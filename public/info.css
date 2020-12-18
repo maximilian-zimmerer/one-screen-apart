@@ -29,10 +29,6 @@ div span,
   position: fixed;
   transition: all 800ms cubic-bezier(0.8, 0, 0.2, 1); /* custom */
 }
-.menu-icon:hover {
-  cursor: pointer;
-  transform: rotateZ(90deg);
-}
 .info-container {
   z-index: 3;
   width: 100%;
@@ -130,5 +126,11 @@ hr {
   }
   .link-icon {
     display: inline-block;
+  }
+}
+@media (min-width: 1280px) {
+  .menu-icon:hover {
+    cursor: pointer;
+    transform: rotateZ(90deg);
   }
 }
