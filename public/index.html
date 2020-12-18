@@ -6,27 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Touch</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="info.css" />
   </head>
   <body>
+    <!-- menu -->
+    <nav class="menu-icon">▼</nav>
+
     <!-- notification container -->
     <section class="notification-wrapper">
       <span>Please switch to a phone or tablet to use this app.</span>
     </section>
-    <!-- status container -->
-    <section class="status-wrapper">
-      <svg class="loader-wrapper" viewBox="0 0 10 10">
-        <ellipse class="loader" cx="5" cy="5" rx="5" ry="5" />
-      </svg>
-      <span class="status">Searching</span>
-      <span class="distance"></span>
+
+    <!-- app container -->
+    <section class="app-container">
+      <!-- status container -->
+      <section class="status-wrapper">
+        <svg class="loader-wrapper" viewBox="0 0 10 10">
+          <ellipse class="loader" cx="5" cy="5" rx="5" ry="5" />
+        </svg>
+        <span class="status">Searching</span>
+        <span class="distance"></span>
+      </section>
+      <!-- canvas container -->
+      <div id="canvas-wrapper"></div>
     </section>
-    <!-- canvas container -->
-    <div id="canvas-wrapper"></div>
+
+    <!-- info container -->
+    <div class="info-container noTouch">
+      <section class="header-wrapper">
+        <span>
+          ONE <br />
+          SCREEN <br />
+          APART
+        </span>
+      </section>
+      <section class="text-wrapper">
+        <span
+          >IS A WEB EXPERIMENT THAT AIMS TO TRANSLATE PHYSICAL INTERACTION INTO
+          A DIGITAL ENVIRONMENT, AND HELP PEOPLE EXPERIENCE TOUCH IN UNFAMILIAR
+          WAYS DURING TIMES OF ISOLATION AND HUMAN DISCONNECTION. PLACE YOUR
+          FINGER ON THE SCREEN AND TOUCH WHOEVER IS ON THE OTHER END OF THE
+          SCREEN. OBSERVE HOW YOUR INTERACTIONS AFFECT THE PARTICLE
+          SYSTEM.</span
+        >
+      </section>
+      <section class="data-wrapper">
+        <!-- data 1 -->
+        <section class="data-flex">
+          <hr />
+          <section class="data">
+            <span>227</span>
+            <span>
+              TOUCHES SINCE <br />
+              NOVEMBER 8, 2020</span
+            >
+          </section>
+        </section>
+        <!-- data 2 -->
+        <section class="data-flex">
+          <hr />
+          <section class="data">
+            <span>©</span>
+            <span
+              >DESIGN & DEVELOPMENT <br />
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.maxi.studio"
+                >MAXI STUDIO</a
+              >
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.maxi.studio"
+                class="link-icon"
+                >▶</a
+              >
+            </span>
+          </section>
+        </section>
+      </section>
+    </div>
+
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="variables.js"></script>
+    <script src="animation.js"></script>
     <script src="client.js"></script>
   </body>
 </html>

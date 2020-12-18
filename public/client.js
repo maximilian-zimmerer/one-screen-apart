@@ -62,7 +62,7 @@ function setup() {
 function draw() {
   background(color("#1e1e1e"));
   // client attractor events
-  if (mouseIsPressed) {
+  if (mouseIsPressed && !toggle) {
     factorClient = 2;
     clientAttractor.update(mouseX, mouseY);
     clientAttractor.show();
@@ -146,29 +146,6 @@ function setBorder() {
   maxDistance = corner1.dist(corner2);
   // set canvas center
   canvasCenter = createVector(window.innerWidth / 2, window.innerHeight / 2);
-}
-function hasTouch() {
-  let hasTouchScreen = false;
-  if ("particlesMaxTouchPoints" in navigator) {
-    hasTouchScreen = navigator.particlesMaxTouchPoints > 0;
-  } else if ("msparticlesMaxTouchPoints" in navigator) {
-    hasTouchScreen = navigator.msparticlesMaxTouchPoints > 0;
-  } else {
-    var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
-    if (mQ && mQ.media === "(pointer:coarse)") {
-      hasTouchScreen = !!mQ.matches;
-      // fallback
-    } else if ("orientation" in window) {
-      hasTouchScreen = true;
-    } else {
-      // agent sniffing fallback
-      var UA = navigator.userAgent;
-      hasTouchScreen =
-        /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-        /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
-    }
-  }
-  return hasTouchScreen;
 }
 function resetParticles() {
   if (particles.length > particlesMin) particles.length = particlesMin;
