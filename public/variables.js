@@ -1,4 +1,5 @@
 let col,
+  once,
   myID,
   canvas,
   sender,
@@ -14,7 +15,8 @@ let col,
   maxDistance,
   canvasCenter,
   particlesMin,
-  particlesMax;
+  particlesMax,
+  touchCounter;
 
 let topLeft,
   topRight,
@@ -29,10 +31,21 @@ let particles = [];
 let clientAttractor, serverAttractor;
 let factorClient, factorServer, factorBounds;
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBIdZrDTrazJxgp-IplPYn7lLWovNn2_uc",
+  authDomain: "touch-app-298618.firebaseapp.com",
+  projectId: "touch-app-298618",
+  storageBucket: "touch-app-298618.appspot.com",
+  messagingSenderId: "155114102370",
+  appId: "1:155114102370:web:5cff6ea58f63ef62fe3b3b",
+  measurementId: "G-D44LG172N1",
+};
+
 const socket = io();
 const status = $(".status");
 const loader = $(".loader");
-const counter = $(".distance");
+const counter = $(".counter");
+const distanceKm = $(".distance");
 const statusWrapper = $(".status-wrapper");
 const notification = $(".notification-wrapper");
 
