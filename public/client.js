@@ -96,7 +96,7 @@ function draw() {
       particles[i].mapColor(clientAttractor.pos, maxDistance, true); // map color to attractor
     } else {
       factorBounds = 1; // reset border attraction
-      particles[i].maxCol = 128; // set dark max color
+      particles[i].maxCol = hasTouch() ? 128 : 225; // set dark max color
     }
     particles[i].mapColor(canvasCenter, maxDistance, hasTouch()); // map color to canvas center
     particles[i].update();
