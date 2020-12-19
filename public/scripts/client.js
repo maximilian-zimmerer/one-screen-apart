@@ -18,7 +18,7 @@ const dbCounterID = "0Gbw2CoY5f3SEGKP4EOa";
 
 $(document).ready(() => {
   if (!hasTouch()) {
-    particlesMin = 500;
+    particlesMin = 300;
     notification.fadeIn();
     notification.css("display", "flex");
   } else {

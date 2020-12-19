@@ -17,6 +17,11 @@ div span,
   opacity: 0;
   top: 4rem;
 }
+a:hover,
+.link-icon:hover,
+.menu-icon:hover {
+  cursor: pointer;
+}
 .link-icon {
   display: none;
 }
@@ -130,7 +135,6 @@ hr {
 }
 @media (min-width: 1280px) {
   .menu-icon:hover {
-    cursor: pointer;
     transform: rotateZ(90deg);
   }
 }

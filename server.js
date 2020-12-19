@@ -1,11 +1,19 @@
 const express = require("express");
 const http = require("http");
+
 const app = express();
 const port = process.env.PORT || 3000;
+const base = process.env.BASE || "/";
 const server = http.createServer(app);
+
 const socket = require("socket.io");
 const io = socket(server);
+
 app.use(express.static("public"));
+
+app.get(base, (request, response) => {
+  response.sendFile(__dirname + "/views/index.html");
+});
 
 io.on("connection", (socket) => {
   updateUsers();

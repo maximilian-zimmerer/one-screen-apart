@@ -1,6 +1,6 @@
 @font-face {
   font-family: Haas;
-  src: url("assets/NHaasGroteskTXPro-55Rg.ttf");
+  src: url("/assets/fonts/Neue-Haas.ttf");
 }
 * {
   box-sizing: border-box;

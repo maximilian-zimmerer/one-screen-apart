@@ -1,22 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Touch</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="info.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SOL -->
+    <title>One Screen Apart</title>
+    <meta name="title" content="One Screen Apart" />
+    <meta
+      name="description"
+      content="A web experiment exploring human touch in a digital space."
+    />
+    <meta name="robots" content="index, follow" />
+    <!-- Open Graph -->
+    <meta
+      property="og:url"
+      content="https://touch-test-201205.herokuapp.com/"
+    />
+    <meta property="og:title" content="One screen apart" ; />
+    <meta
+      property="og:description"
+      content="A web experiment exploring human touch in a digital space."
+      ;
+    />
+    <meta
+      property="og:image"
+      content="https://touch-test-201205.herokuapp.com/assets/meta/open_graph/1500x1500.png"
+    />
+    <!-- Canaconical -->
+    <link rel="canonical" href="https://touch-test-201205.herokuapp.com/" />
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/meta/favicon/16x16.png"
+      sizes="16x16"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/meta/favicon/32x32.png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/meta/favicon/64x64.png"
+      sizes="64x64"
+    />
+    <!-- Apple Touch Icon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/assets/meta/apple_touch/57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="/assets/meta/apple_touch/60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/assets/meta/apple_touch/72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/assets/meta/apple_touch/76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/assets/meta/apple_touch/114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/assets/meta/apple_touch/120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/assets/meta/apple_touch/144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/assets/meta/apple_touch/152x152.png"
+    />
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/info.css" />
   </head>
   <body>
     <!-- menu -->
     <nav class="menu-icon">▼</nav>
-
     <!-- notification container -->
     <section class="notification-wrapper">
       <span>PLEASE SWITCH TO A PHONE OR TABLET TO USE THIS APP.</span>
     </section>
-
     <!-- app container -->
     <section class="app-container">
       <!-- status container -->
@@ -30,7 +112,6 @@
       <!-- canvas container -->
       <div id="canvas-wrapper"></div>
     </section>
-
     <!-- info container -->
     <div class="info-container noTouch">
       <section class="header-wrapper">
@@ -87,17 +168,15 @@
         </section>
       </section>
     </div>
-
     <!-- scripts -->
-
     <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="variables.js"></script>
-    <script src="animation.js"></script>
-    <script src="client.js"></script>
+    <script src="/scripts/variables.js"></script>
+    <script src="/scripts/animation.js"></script>
+    <script src="/scripts/client.js"></script>
   </body>
 </html>
