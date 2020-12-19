@@ -14,7 +14,6 @@ app.use(express.static("public"));
 app.get(base, (request, response) => {
   response.sendFile(__dirname + "/views/index.html");
 });
-
 io.on("connection", (socket) => {
   updateUsers();
   socket.on("disconnect", () => {
