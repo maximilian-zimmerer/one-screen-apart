@@ -1,3 +1,5 @@
+require("dotenv").config();
+const sslRedirect = require("heroku-ssl-redirect").default;
 const express = require("express");
 const http = require("http");
 
@@ -9,6 +11,7 @@ const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
 
+app.use(sslRedirect());
 app.use(express.static("public"));
 
 app.get(base, (request, response) => {
