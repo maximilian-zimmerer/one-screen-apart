@@ -5,6 +5,8 @@
 * {
   box-sizing: border-box;
   -webkit-user-select: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -22,6 +24,9 @@ body {
   background: #1e1e1e;
   -webkit-text-size-adjust: 100%;
   transition: all 800ms cubic-bezier(0.8, 0, 0.2, 1); /* custom */
+}
+::-webkit-scrollbar {
+  display: none;
 }
 .notification-wrapper {
   z-index: 1;
