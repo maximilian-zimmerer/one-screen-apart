@@ -7,15 +7,6 @@ particlesMax = 500;
 touchServer = false;
 p5.disableFriendlyErrors = true;
 
-// inititalise firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-// access counter object
-const db = firebase.firestore();
-const dbCounter = db.collection("counter");
-const dbCounterID = "0Gbw2CoY5f3SEGKP4EOa";
-
 $(document).ready(() => {
   if (!hasTouch()) {
     particlesMin = 300;
@@ -26,7 +17,6 @@ $(document).ready(() => {
     statusWrapper.css("display", "flex");
     getLocation();
   }
-  getCounter();
 });
 $(window).on("resize", () => {
   setBorder();
@@ -101,7 +91,6 @@ function draw() {
     }
     // overlap event
     if (overlap()) {
-      if (!once) incrementCounter();
       once = true;
       factorBounds = 0.5; // lower border attraction
       particles[i].maxCol = 225; // set bright max color
@@ -213,26 +202,4 @@ function toggleStatus() {
       status.fadeIn();
     });
   }
-}
-// firebase
-function getCounter() {
-  dbCounter
-    .doc(dbCounterID)
-    .get()
-    .then((doc) => {
-      touchCounter = doc.data().counter;
-      counter.html(`${touchCounter}`);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-function incrementCounter() {
-  touchCounter++;
-  counter.html(`${touchCounter}`);
-  // update firebase counter
-  if (myIndex % 2 != 0)
-    dbCounter.doc(dbCounterID).update({
-      counter: firebase.firestore.FieldValue.increment(1),
-    });
 }

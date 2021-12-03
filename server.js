@@ -34,9 +34,6 @@ io.on("connection", (socket) => {
 function updateUsers() {
   io.clients((err, clients) => {
     if (err) console.log(err);
-    console.log("number of users: " + clients.length);
-    console.log("client list: " + clients);
-    io.emit("clients", clients);
   });
 }
 const listener = server.listen(port, () => {
